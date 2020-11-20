@@ -30,54 +30,55 @@ struct ListNode
 	ListNode<T>* _next; 
 };
 
-template<class T>
+template<class T,class ref,class ptr>
 struct Listiterator
 {
 	typedef ListNode<T> Node;
+	typedef Listiterator<T, ref, ptr> Self;
 	//封装一个节点
 	Node* _node;
 	Listiterator(Node* node)
 		:_node(node)
 	{}
 	
-	Listiterator(const Listiterator<T>& lit) //用一个迭代器构造另一个
+	Listiterator(const Self& lit) //用一个迭代器构造另一个
 		:_node(lit._node)
 	{}
 
-	T& operator*()
+	ref operator*()
 	{
 		//cout << this->_node->_data;
 		return _node->_data;
 	}
 
-	Listiterator<T>& operator++() //返回迭代器 前置++
+	Self& operator++() //返回迭代器 前置++
 	{
 		_node = _node->_next;
 		return *this;
 	}
 
-	Listiterator<T>& operator--() //返回迭代器 前置--
+	Self& operator--() //返回迭代器 前置--
 	{
 		_node = _node->_prev;
 		return *this;
 	}
 
-	Listiterator<T> operator++(int) //后置++ 因为后置++返回原来的迭代器
+	Self operator++(int) //后置++ 因为后置++返回原来的迭代器
 	{
 		Listiterator<T> tmp(*this);//拷贝构造一个迭代器
 		_node = _node->_next;
 		return tmp;
 	}
 
-	bool operator!=(const Listiterator<T>& it)
+	bool operator!=(const Self& it) const
 	{
 		return _node != it._node;
 	}
-	bool operator ==(const Listiterator<T>& it)
+	bool operator ==(const Self& it) const
 	{
 		return _node == it._node;
 	}
-	T* operator ->() 
+	ptr operator ->() 
 	{
 		return &this->_node->_data;
 	}
@@ -88,8 +89,9 @@ class List
 {
 public:
 	typedef ListNode<T> Node;
-	typedef Listiterator<T> iterator;
-	typedef const Listiterator<T> const_iterator;
+	typedef Listiterator<T, T&, T*> iterator;
+	typedef Listiterator<T,const T&,const T*> const_iterator;
+	//typedef const Listiterator<T> const_iterator;  单纯的加const实现不了功能，移动的时候不能完成
 	List()
 	{
 		_header = new Node;
@@ -104,7 +106,7 @@ public:
 			push_back(val);
 		}
 	}
-	List(iterator first, iterator last)
+	List(const_iterator first, const_iterator last)
 	{
 		_header = new Node;
 		_header->_prev = _header->_next = _header;
@@ -166,13 +168,17 @@ public:
 
 	iterator erase(iterator pos) //返回下一个节点的位置
 	{
-		Node* next = pos._node->_next;
+		if (pos!=end())
+		{
+			Node* next = pos._node->_next;
 
-		pos._node->_prev->_next = next;
-		next->_prev = pos._node->_prev;
+			pos._node->_prev->_next = next;
+			next->_prev = pos._node->_prev;
 
-		delete pos._node;
-		return iterator(next);
+			delete pos._node;
+			return iterator(next);
+		}
+		return pos;
 	}
 
 	//此处支持整形数据的打印
@@ -309,7 +315,7 @@ void test()
 	List<string>::iterator it = l.begin();
 	while (it != l.end())
 	{
-		cout << *it << " ";
+		//cout << *it << " ";
 		++it;
 	}
 	cout << "清空后" << endl;
@@ -318,7 +324,7 @@ void test()
 }
 int main()
 {
-	//List<int> lst;
+	//<int> lst;
 	//lst.push_back(1);
 	//lst.push_back(2);
 	//lst.push_back(3);

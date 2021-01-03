@@ -1,0 +1,2 @@
+﻿  String.cpp
+c:\users\恩光\desktop\c++代码\string实现\string实现\string.cpp(340): fatal error C1010: 在查找预编译头时遇到意外的文件结尾。是否忘记了向源中添加“#include "pch.h"”?

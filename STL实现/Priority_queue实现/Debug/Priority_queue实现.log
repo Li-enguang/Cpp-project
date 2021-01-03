@@ -1,0 +1,19 @@
+﻿  priority_queue实现.cpp
+c:\users\恩光\desktop\c++代码\stl实现\priority_queue实现\priority_queue实现.cpp(71): warning C4018: “<”: 有符号/无符号不匹配
+  c:\users\恩光\desktop\c++代码\stl实现\priority_queue实现\priority_queue实现.cpp(69): note: 编译 类 模板 成员函数 "void priority_queue<Date,std::vector<Date,std::allocator<_Ty>>,Greater<Date>>::shiftdown(int)" 时
+          with
+          [
+              _Ty=Date
+          ]
+  c:\users\恩光\desktop\c++代码\stl实现\priority_queue实现\priority_queue实现.cpp(114): note: 参见对正在编译的函数 模板 实例化“void priority_queue<Date,std::vector<Date,std::allocator<_Ty>>,Greater<Date>>::shiftdown(int)”的引用
+          with
+          [
+              _Ty=Date
+          ]
+  c:\users\恩光\desktop\c++代码\stl实现\priority_queue实现\priority_queue实现.cpp(158): note: 参见对正在编译的 类 模板 实例化 "priority_queue<Date,std::vector<Date,std::allocator<_Ty>>,Greater<Date>>" 的引用
+          with
+          [
+              _Ty=Date
+          ]
+c:\users\恩光\desktop\c++代码\stl实现\priority_queue实现\priority_queue实现.cpp(73): warning C4018: “<”: 有符号/无符号不匹配
+  Priority_queue实现.vcxproj -> C:\Users\恩光\Desktop\c++代码\STL实现\Debug\Priority_queue实现.exe
